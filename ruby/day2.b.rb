@@ -1,3 +1,5 @@
+# Many thanks to the users at http://forums.pragprog.com/forums/147/topics/7077.
+
 class Tree
 	attr_accessor :children, :node_name, :depth
 	def initialize(hash={}, depth = 0)
