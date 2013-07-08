@@ -1,4 +1,0 @@
-FAIL: This is a file that I made
-FAIL: with a small amount of text in
-PASS: it. This test should pass.
-

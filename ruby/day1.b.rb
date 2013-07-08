@@ -1,3 +1,7 @@
+# Tyler Palsulich
+# Seven Languages in Seven Weeks, by Bruce A. Tate
+# Ruby Day 1
+
 num = rand(50)
 guess = 0
 while num != guess

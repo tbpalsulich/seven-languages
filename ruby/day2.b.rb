@@ -1,3 +1,7 @@
+# Tyler Palsulich
+# Seven Languages in Seven Weeks, by Bruce A. Tate
+# Ruby Day 2
+
 # Many thanks to the users at http://forums.pragprog.com/forums/147/topics/7077.
 
 class Tree
