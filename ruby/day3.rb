@@ -2,6 +2,10 @@
 # Seven Languages in Seven Weeks, by Bruce A. Tate
 # Ruby Day 3
 
+# Modify the CSV application to support an each method to return a
+# CsvRow object. Use method_missing on that CsvRow to return the value
+# for the column for a given heading.
+
 module ActsAsCsv
   def self.included(base)
     base.extend ClassMethods

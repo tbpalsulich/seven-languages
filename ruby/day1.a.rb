@@ -2,6 +2,8 @@
 # Seven Languages in Seven Weeks, by Bruce A. Tate
 # Ruby Day 1
 
+# This is just the basics of Ruby. 
+
 puts "Part 1:"
 puts "Hello, world."
 puts
@@ -10,11 +12,7 @@ puts "Hello, Ruby.".index("Ruby")
 
 puts
 puts "Part 3:"
-i = 0
-while i < 10
-	puts "Tyler Palsulich"
-	i = i + 1
-end
+10.times puts "Tyler Palsulich"
 
 puts
 puts "Part 4:"
