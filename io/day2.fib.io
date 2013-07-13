@@ -1,3 +1,14 @@
+// Tyler Palsulich
+// Seven Languages in Seven Weeks, by Bruce A. Tate
+// Io Day 2
+
+
+// A Fibonacci sequence starts with two 1s. Each subsequent num-
+// ber is the sum of the two numbers that came before: 0, 1, 1, 2, 3,
+// 5, 8, 13, 21, and so on. Write a program to find the nth Fibonacci
+// number. fib(1) is 0, and fib(4) is 2. As a bonus, solve the problem
+// with recursion and with loops.
+
 fib := method(
   a := 0
   b := 1
