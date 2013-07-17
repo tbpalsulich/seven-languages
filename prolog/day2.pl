@@ -17,3 +17,14 @@ minimum([Head|Tail], Return) :-
 minimum([Head|Tail], Return) :-
 	minimum(Tail, TailMin),
 	Head >= TailMin, Return is TailMin.
+
+merge(X, [], [X]).
+merge(X, [Y|Tail], [X,Y|Tail]) :-
+    X @< Y, !.
+merge(X, [Y|Tail2], [Y|Tail]) :-
+    merge(X, Tail2, Tail).
+
+msort([A], [A]).
+msort([A, B], [A, B]) :- A < B.
+msort([A, B], [B, A]) :- B =< A.
+msort([Head|Tail], Result) :- msort(Tail, SortedTail), merge(Head, SortedTail, Result).
