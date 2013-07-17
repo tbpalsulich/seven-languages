@@ -14,18 +14,20 @@ Builder := Object clone
 Builder indent := ""
 Builder attributed := false
 Builder forward := method(
-	Builder attributed = false
 	write(indent, "<" , call message name)
-	if(call message argAt(0) asString beginsWithSeq("curlyBrackets"), 
-		content := self doMessage(call message argAt(0))
-		Builder attributed = true
-	)
-	writeln(">")
 	self indent = self indent with("  ")
 	call message arguments foreach(i, arg,
-		if(i > 0, Builder attributed = false)
-		content := self doMessage(arg);
-		if((content type == "Sequence" or content type == "Number") and Builder attributed == false, writeln(indent, content); Builder attributed = false)
+		content := nil
+		if(arg asString beginsWithSeq("curlyBrackets"),
+			if(i == 0, 
+				self doMessage(arg); writeln(">")
+			), 
+			if(i == 0, 
+				writeln(">"); content := self doMessage(arg),
+				content := self doMessage(arg)
+			)
+		)
+		if((content type == "Sequence" or content type == "Number"), writeln(indent, content))
 	)
 	self indent = self indent asMutable removeSuffix("  ")
 	writeln(indent, "</" , call message name, ">" )
@@ -39,20 +41,18 @@ curlyBrackets := method(
 	s
 )
 Sequence attribute := method(
-	if(Builder attributed == false,
-		write(" ", 
-			call evalArgAt(0) asMutable removePrefix("\"") removeSuffix("\"" ), 
-			"=\"", 
-			call evalArgAt(1), 
-			"\""
-		)
+	write(" ", 
+		call evalArgAt(0) asMutable removePrefix("\"") removeSuffix("\"" ), 
+		"=\"", 
+		call evalArgAt(1), 
+		"\""
 	)
 )
 doString("
-Builder ul(
-	li(\"Io\" ),
-	li(\"Lua\" ),
-	li(\"JavaScript\" )
-	book({\"author\": \"Tate\", \"reader\": \"Tyler\"}, \"A bunch of words...\")
-)
+	Builder ul(
+		li(\"Io\" ),
+		li(\"Lua\" ),
+		li(\"JavaScript\" )
+		book({\"author\": \"Tate\", \"reader\": \"Tyler\"}, \"A bunch of words...\")
+	)
 ")
