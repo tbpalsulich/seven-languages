@@ -107,11 +107,11 @@ class Board(positions: Array[String]){
 		}
 		return -1
 	}
-	def preventFork() :Int = {
+	def findFork(mark: String) :Int = {
 		var i = 0
 		for(i <- 0 to 7){
 			if(positions(i) == "-"){
-				if(fork(notTurn, i)){
+				if(fork(mark, i)){
 					return i
 				}
 			}
@@ -122,23 +122,27 @@ class Board(positions: Array[String]){
 	def bestMove() :Int = {
 		val forTheWin = twoInARow(player, -1)
 		if(forTheWin > -1) return forTheWin
+
 		val forTheBlock = twoInARow(notTurn, -1)
-		println("This?")
 		if(forTheBlock > -1) return forTheBlock
+
+		val makeAFork = findFork(player)
+		if(makeAFork > -1) return makeAFork
+
 		val makeTwo = makeTwoInARow
 		if(makeTwo > -1) return makeTwo
-		val stopAFork = preventFork
+
+		val stopAFork = findFork(notTurn)
 		if(stopAFork > -1) return stopAFork
+
 		if(positions(4) == "-") return 4
 		if(positions(0) == notTurn && positions(8) == "-") return 8
-		println("Here?")
 		if(positions(2) == notTurn && positions(6) == "-") return 6
 		if(positions(6) == notTurn && positions(2) == "-") return 2
 		if(positions(8) == notTurn && positions(0) == "-") return 0
 		if(positions(0) == "-") return 0
 		if(positions(2) == "-") return 2
 		if(positions(8) == "-") return 8
-		println("Maybe here?")
 		if(positions(6) == "-") return 6
 		if(positions(1) == "-") return 1
 		if(positions(3) == "-") return 3
@@ -147,31 +151,37 @@ class Board(positions: Array[String]){
 		return -1
 	}
 
-	def reset() = {
+	def reset() {
 		player = "X"
 		var i = 0
 		for(i <- 0 to 8) positions(i) = "-"
+	}
+	def start() {
+		while(state){
+			try{
+				val input = readLine(turn)
+				if(input == "reset"){
+					reset
+					println
+					print
+				}
+				else {
+					val index = input.toInt
+					play(index)
+					val bm = bestMove
+					positions(bm) = bm.toString
+					println
+					print
+					positions(bm) = "-"
+				}
+			}
+			catch {
+				case e => {println("I didn't understand that...")}
+			}
+		}
 	}
 }
 
 val bBoard = new Board(Array("-", "-", "-", "-", "-", "-", "-", "-", "-"))
 bBoard.print
-while(bBoard.state){
-	try{
-		val input = readLine(bBoard.turn)
-		if(input == "reset"){
-			bBoard.reset
-			println
-			bBoard.print
-		}
-		else {
-			val index = input.toInt
-			bBoard.play(index)
-			println(bBoard.bestMove)
-			println
-			bBoard.print
-		}
-		} catch {
-			case e => {println("I didn't understand that...")}
-		}
-	}
+bBoard.start
