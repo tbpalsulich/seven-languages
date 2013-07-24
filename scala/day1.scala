@@ -8,6 +8,7 @@
 
 // Bonus problem: Let two players play tic-tac-toe.
 
+// For fun, I also determine what the "best" move is for any given board.
 
 class Board(positions: Array[String]){
 	var player = "X"
