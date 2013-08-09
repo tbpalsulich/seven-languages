@@ -23,6 +23,9 @@
 -export([total_price/0]).
 -export([tic/1]).
 
+% To retrieve the value in the list corresponding the the key, filter the list
+% to get all elements with the right key, then return the resulting value. 
+% We discard all values with the same key.
 hash(List, Key) -> 
 	[{ _, Value} | _ ] = lists:filter(fun({K, _}) -> K == Key end, List), Value.
 
@@ -30,6 +33,9 @@ total_price() ->
 	Cart = [{pencil, 4, 0.25}, {pen, 1, 1.20}, {paper, 2, 0.20}],
 	[{Product, Quantity, Price, Quantity * Price} || {Product, Quantity, Price} <- Cart].
 
+% While ugly, pattern matching seems to be a very good solution to check if the board has a winner.
+% Another idea is to filter a list of tuples giving possible winning lines by ensuring the board's
+% positions have the same value (other than e) at those positions.
 tic(Board) ->
 	case Board of
 		[P, P, P,

@@ -15,31 +15,31 @@
 loop() ->
 	process_flag(trap_exit, true),
 	receive
-		new ->
+		new ->		% Create a new translator and watch for it to die.
 			register(translator, spawn_link(fun day3_translate_service:loop/0)),
 			io:format("Creating a new translator...~n"),
 			loop();
 
-		{'EXIT', From, Reason} ->
+		{'EXIT', From, Reason} ->		% The translator died. Restart it with info.
 			io:format("The translator ~p died with reason ~p.", [From, Reason]),
 			io:format("Restarting it...~n"),
 			self() ! new,
 			loop();
 
-		_ ->
+		_ ->		% Our doctor was given a bad command! Make him exit.
 			exit({doctor_loop, bad_doctor_order, received_at, erlang:time()})
 		end.
 
-doc_doc() ->
+doc_doc() ->		% Supervisor for the doctor of the translator.
 	process_flag(trap_exit, true),
 	receive
-		new ->
+		new ->		% Create a new doctor.
 			register(doctor, spawn_link(fun day3_translate_doctor:loop/0)),
 			io:format("Creating a new doctor...~n"),
 			doctor ! new,
 			doc_doc();
 
-		{'EXIT', From, Reason} ->
+		{'EXIT', From, Reason} ->		% Our doctor died. Restart him with info.
 			io:format("The doctor ~p died with reason ~p.", [From, Reason]),
 			io:format("Restarting it...~n"),
 			self() ! new,
