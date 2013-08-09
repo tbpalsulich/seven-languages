@@ -4,6 +4,16 @@
 
 :- use_module(library(clpfd)).
 
+% Modify the Sudoku solver to work on six-by-six puzzles (squares
+% are 3x2) and 9x9 puzzles.
+
+% Make the Sudoku solver print prettier solutions.
+
+
+% These sudoku solvers use pattern matching to solve the puzzles. They are not clean, in the slightest,
+% but the book seems to want to drill this in. I use the slice method below because I did not want to 
+% write out all of the elements again. Granted, that took more time, but it is an interesting function.
+
 
 % Source of slice: https://sites.google.com/site/prologsite/prolog-problems/1/solutions-1/p1_18.pl
 slice([X|_],1,1,[X]).
