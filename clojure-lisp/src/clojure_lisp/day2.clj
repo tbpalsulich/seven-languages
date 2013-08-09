@@ -2,6 +2,9 @@
 ; Seven Languages in Seven Weeks, by Bruce A. Tate
 ; Clojure day 2
 
+; Implement an unless with an else condition using macros.
+; Write a type using defrecord that implements a protocol.
+
 (ns clojure-lisp.day2
   (:gen-class))
 
@@ -22,7 +25,8 @@
 	Person
 	(introduce [_] (println (str "\"My name is " name ".\"")))
 	(greet [_] (println "\"Hello!\""))
-	(wave [_] (println (str name " waves at you for the " (numbers (str (+ waves 1))) " time.")) ; Use the map to convert the number of waves.
+	; Use the map to convert the number of waves to a nice string. Return a new SimplePerson with incremented wave counter.
+	(wave [_] (println (str name " waves at you for the " (numbers (str (+ waves 1))) " time."))
 		(SimplePerson. name (+ waves 1))))
 
 (defn -main []
