@@ -12,23 +12,23 @@
 // Write the matrix to a file, and read a matrix from a file.
 
 Matrix := Object clone
-Matrix dim := method(x, y,
-	self lists := list
-	for(i, 1, x, lists push(list() setSize(y)))
+Matrix dim := method(x, y,		// Set the dimensions of the array.
+	self lists := lists 		// List to hold the lists of elements.
+	for(i, 1, x, lists push(list() setSize(y)))		// Generate the lists given the input sizes.
 )
-Matrix set := method(x, y, val,
+Matrix set := method(x, y, val,		// Set the element in the array at (x, y) to val.
 	lists at(x - 1) atPut(y - 1, val)
 	return val
 )
-Matrix get := method(x, y,
+Matrix get := method(x, y,			// Get the element in the array at (x, y).
 	lists at(x - 1) at(y - 1)
 )
-Matrix transpose := method(
+Matrix transpose := method(			// Mirror the array so that oldArray(x, y) = newArray(y, x).
 	new_matrix := self clone
 	new_matrix dim(lists at(0) size, lists size)
-	for(x, lists size, 1, -1, 
-		for(y, lists at(0) size, 1, -1, 
-			new_matrix set(y, x, lists at(x - 1) at(y - 1))
+	for(x, lists size, 1, -1, 		// For every column of the old matrix.
+		for(y, lists at(0) size, 1, -1, // For every row of the old matrix.
+			new_matrix set(y, x, lists at(x - 1) at(y - 1))		// Set the new_matrix value.
 		)
 	)
 	return new_matrix
@@ -36,20 +36,21 @@ Matrix transpose := method(
 
 Matrix write := method(fileName,
 	writeln("Writing matrix to ", fileName)
-	file := File open(fileName)
-	for(x, 0, lists size - 1,
+	file := File open(fileName)		// Open a file with the given name for printing.
+	for(x, 0, lists size - 1,		// Loop through every element to print it.
 		for(y, 0, lists at(0) size - 1,
+			// Print to the file delimiting columns by commas and rows by newlines.
 			file write(lists at(x) at(y) asString, if(y == lists at(0) size - 1, "\n", ", "))
 		)
 	)
 	file close
 )
 readMatrix := method(fileName,
-	file := File open(fileName)
+	file := File open(fileName)		// Open the file. Assuming it exists.
 	new_matrix := Matrix clone
 	new_matrix lists := list
 	file foreachLine(i, line,
-		new_matrix lists push(line split(", "))
+		new_matrix lists push(line split(", "))		// Add to the new matrix line by line, splitting by commas.
 	)
 	file close
 	return new_matrix

@@ -9,17 +9,23 @@
 // number. fib(1) is 0, and fib(4) is 2. As a bonus, solve the problem
 // with recursion and with loops.
 
+// To do the sequence iteratively, loop the desired number of times,
+// adding the previous two numbers each time (starting with 0 and 1).
 fib := method(
   a := 0
   b := 1
   for(i, 1, doMessage(call message argAt(0)) - 1, c := a + b; a := b; b := c)
 )
 
+// Naive recursive method. Return the sum of previous two elements.
 rfib := method(n,
 	if(n < 2, return n)
 	return rfib(n - 1) + rfib(n - 2)
 )
 
+// Second recursive implementation is more similar to the iterative solution:
+// Recursively call until your desired index is less than 2, adding up terms
+// every time.
 rfib2 := method(n,
 	if(n < 1, return n)
 	rfib2_helper(n, 0, 1)

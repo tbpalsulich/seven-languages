@@ -12,11 +12,11 @@
 
 List twoDimSum := method(
 	sum := 0
-	flat := self flatten()
+	flat := self flatten()		// Ensure this is only a 1 dimensional list.
 	flat foreach(i, v, 
 		if(v type == "Number",
-			sum = sum + v, 
-			Exception raise("That's not a number!")
+			sum = sum + v, 		// If it's a number, add it to the sum.
+			Exception raise("That's not a number!")	// Else, notify the user.
 		)
 	)	
 )

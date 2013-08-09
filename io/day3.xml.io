@@ -11,36 +11,37 @@
 // book({"author": "Tate"}...) would print <book author="Tate">:
 
 Builder := Object clone
-Builder indent := ""
-Builder attributed := false
-Builder forward := method(
-	write(indent, "<" , call message name)
-	self indent = self indent with("  ")
+Builder indent := ""			// For pretty printing.
+Builder attributed := false		// State variable to check when to print attributes.
+Builder forward := method(		// If the method is unknown.
+	write(indent, "<" , call message name)		// Open the tag. Don't close, since we may have attributes.
+	self indent = self indent with("  ")		// Increment the indent.
 	call message arguments foreach(i, arg,
-		content := nil
-		if(arg asString beginsWithSeq("curlyBrackets"),
-			if(i == 0, 
+		content := nil							// Set content to nil to ensure a clean start every loop.
+		if(arg asString beginsWithSeq("curlyBrackets"),	// If this argument starts with a curly bracket...
+			if(i == 0, 	// If this is the first argument, we found an attribute!
 				self doMessage(arg); writeln(">")
 			), 
-			if(i == 0, 
+			if(i == 0, // If it isn't an attribute, close the tag then set content. Otherwise, just set content.
 				writeln(">"); content := self doMessage(arg),
 				content := self doMessage(arg)
 			)
 		)
+		// Print sequences and numbers, but nothing else. This isn't robust since there are clearly other things to print.
 		if((content type == "Sequence" or content type == "Number"), writeln(indent, content))
 	)
-	self indent = self indent asMutable removeSuffix("  ")
-	writeln(indent, "</" , call message name, ">" )
+	self indent = self indent asMutable removeSuffix("  ")	// Decrement the indent.
+	writeln(indent, "</" , call message name, ">" )			// End the tag.
 )
-OperatorTable addAssignOperator(":" , "attribute" )
-curlyBrackets := method(
+OperatorTable addAssignOperator(":" , "attribute" )			// If we get a :, call attribute.
+curlyBrackets := method(			// Just evaluate curly brackets' content as if it's code... calling forward.
 	s := Sequence clone
 	call message arguments foreach(arg,
 		s doMessage(arg)
 	)
 	s
 )
-Sequence attribute := method(
+Sequence attribute := method(		// We found an attribute! So, print it. Nothing else to do.
 	write(" ", 
 		call evalArgAt(0) asMutable removePrefix("\"") removeSuffix("\"" ), 
 		"=\"", 
@@ -48,7 +49,7 @@ Sequence attribute := method(
 		"\""
 	)
 )
-doString("
+doString("		// Test case. Should print the attributes inside the book tag.
 	Builder ul(
 		li(\"Io\" ),
 		li(\"Lua\" ),

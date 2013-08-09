@@ -5,6 +5,7 @@
 // Create a list syntax that uses brackets.
 
 curlyBrackets := method(
+	// Create a list from evaluating each argument between the curly brackets.
 	list := call message arguments map(v,
 		self doMessage(v)
 	)
@@ -13,5 +14,5 @@ curlyBrackets := method(
 
 
 mList := {"First", "Second", "Third"}
-mList println // Should print "list(First, Second, Third)"
+mList println 		// Should print "list(First, Second, Third)"
 
