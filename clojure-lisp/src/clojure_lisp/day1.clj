@@ -12,7 +12,7 @@
   (:gen-class))
 
 (defn big
-  "big [st n] returns whether st is longer than n characters."
+  "big [st n] returns whether st is longer than n characters."  ; Description of the function.
   [st n]    ; Only arguments are the string and length.
   (> (count st) n)) ; Note the prefix notation. 
 

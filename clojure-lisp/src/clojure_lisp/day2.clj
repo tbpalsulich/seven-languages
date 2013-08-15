@@ -9,7 +9,7 @@
   (:gen-class))
 
 (defmacro unless [test body else-body]		; Problem 1. Simple expansion of the macro given.
-	(list 
+	(list 									; Code is data! Everything is a list.
 		'if (list 'not test)
 		body
 		else-body))
